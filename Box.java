@@ -10,6 +10,7 @@ import info.gridworld.grid.Location;
 public class Box extends Actor
 {
 	private boolean isMine = false;
+	private boolean isChecked = false;
 
 	public Box(boolean mine)
 	{
@@ -20,6 +21,16 @@ public class Box extends Actor
 	public boolean isMine()
 	{
 		return isMine;
+	}
+	
+	public boolean isChecked()
+	{
+		return isChecked;
+	}
+	
+	public void checked()
+	{
+		isChecked = true;
 	}
 
 	public void act()
