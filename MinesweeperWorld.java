@@ -15,6 +15,7 @@ public class MinesweeperWorld extends ActorWorld
 	private boolean flagMode = false;
 	
 	private int numMines = 0;
+	int numUnchecked = 0;
 
 	public MinesweeperWorld(int size) //Constructor
 	{
@@ -23,7 +24,7 @@ public class MinesweeperWorld extends ActorWorld
 		{
 			for(int y=0; y <size; y++)
 			{
-				int random = (int) (Math.random()*10); //Randomly decides whether Box is a mine or not.
+				int random = (int) (Math.random()*20); //Randomly decides whether Box is a mine or not.
 
 				if (random == 0)
 				{
@@ -48,6 +49,7 @@ public class MinesweeperWorld extends ActorWorld
 		Actor temp = gr.get(loc);
 		
 		
+		
 		if(flagMode == false)
 		{
 			if(temp instanceof Box)
@@ -66,6 +68,31 @@ public class MinesweeperWorld extends ActorWorld
 				unflag(loc);
 			}
 		}
+		
+		
+		
+		numUnchecked = 0;
+		for(Location tempLoc: getGrid().getOccupiedLocations())
+		{
+			if(getGrid().get(tempLoc) instanceof Box)
+			{
+				Box tempBox = (Box) getGrid().get(tempLoc);
+				
+				if(!tempBox.isChecked())
+				{
+					numUnchecked++;
+				}
+			}
+			if(getGrid().get(tempLoc) instanceof Flag)
+			{
+				numUnchecked++;
+			}
+		}
+		
+		if(numUnchecked == numMines)
+			setMessage("Win.");
+		
+		
 		
 		
 
@@ -109,6 +136,9 @@ public class MinesweeperWorld extends ActorWorld
 		if(!gameOver && getGrid().get(loc) instanceof Box) //Makes sure game is not over and player is clicking on an empty box.
 		{
 			Box currentBox = (Box) getGrid().get(loc);
+			
+			currentBox.checked();
+			
 			if(currentBox.isMine())
 			{
 				//Replaces checked location with a mine.
