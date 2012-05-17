@@ -47,12 +47,6 @@ public class MinesweeperWorld extends ActorWorld
 		Grid<Actor> gr = getGrid();
 		Actor temp = gr.get(loc);
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
 		
 		if(flagMode == false)
 		{
