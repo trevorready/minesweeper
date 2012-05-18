@@ -90,16 +90,41 @@ public class MinesweeperWorld extends ActorWorld
 		}
 		
 		if(numUnchecked == numMines)
-			setMessage("Win.");
-		
-		
-		
-		
+                  {
+		   setMessage("\t" + "\t" + "WIN!!!!!!!!!!"); //sets the message to the middle of the line.
+                     gameOver();
+		}
 
 		return true; 
 	}
 	
-	
+		
+	public boolean gameOver() //sets each box to a random color when game is won, it is lagged by the sleep.
+	{
+           for (int x = 0; x < getGrid().getNumRows(); x++)
+	  {
+	    for (int y = 0; y < getGrid().getNumCols(); y++)
+	    {
+	      int R = (int)(Math.random()*256);
+               int G = (int)(Math.random( )*256);
+               int B= (int)(Math.random( )*256);
+               Color randomColor = new Color(R, G, B);
+
+               try 
+               { 
+                  Thread.sleep(10); 
+                  getGrid().put(new Location(x, y), new Box(false));
+                  getGrid().get(new Location(x, y)).setColor(randomColor);
+               }
+        
+               catch (InterruptedException e) 
+               { 
+                  e.printStackTrace(); 
+               } 
+	    }
+	  }
+	  return true;
+	}
 	
 	public boolean keyPressed(String description, Location loc)
 	{
@@ -160,6 +185,7 @@ public class MinesweeperWorld extends ActorWorld
 
 				//Prevents more clicking if player hits mine.
 				gameOver = true;
+                                   setMessage("\t" + "\t" + "LOSER!!!!!!!!!");
 			}
 
 			else
